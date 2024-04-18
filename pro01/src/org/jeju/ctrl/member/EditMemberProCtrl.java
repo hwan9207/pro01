@@ -24,12 +24,11 @@ public class EditMemberProCtrl extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		String id = request.getParameter("id");
-		Member mem = new Member(request.getParameter("name"),
+		Member mem = new Member(request.getParameter("id"),
 				request.getParameter("pw"),
-				request.getParameter("tel"),
-				request.getParameter("addr"),
-				request.getParameter("brith"),
-				request.getParameter("id"));
+				request.getParameter("name"),
+				request.getParameter("email"),
+				request.getParameter("tel"));
 		
 		MemberDAO dao = new MemberDAO();
 		int cnt = dao.upMember(mem);

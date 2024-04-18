@@ -26,6 +26,7 @@ th.item3 { width:20%; }
 <div id="header">
 	<%@ include file="/header.jsp" %>
 </div>
+<br><br><br><br><br><br><br><br><br><br><br>
 <div id="contents">
 	<section class="page" id="page1">
 		<div style="width:1400px; margin:0 auto;">
@@ -80,12 +81,6 @@ th.item3 { width:20%; }
 			</div>
 		</div>
 	</section>
-	<section class="page" id="page2">
-		<div style="width:1400px; margin:0 auto;">	
-			<h3 class="page_title"></h3>
-
-		</div>	
-	</section>	
 </div>
 <div id="footer">
 	<%@ include file="/footer.jsp" %>

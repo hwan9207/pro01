@@ -19,17 +19,16 @@ public class JoinProCtrl extends HttpServlet {
         super();
     }
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
-		Member mem = new Member(request.getParameter("name"),
+		Member mem = new Member(request.getParameter("id"),
 				request.getParameter("pw"),
-				request.getParameter("tel"),
-				request.getParameter("addr"),
-				request.getParameter("brith"),
-				request.getParameter("id"));
+				request.getParameter("name"),
+				request.getParameter("email"),
+				request.getParameter("tel"));
 		
 		MemberDAO dao = new MemberDAO();
 		int cnt = dao.join(mem);

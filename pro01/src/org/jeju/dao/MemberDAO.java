@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeju.dto.Member;
-import org.jeju.dto.Notice;
 
 public class MemberDAO {
 	Connection con = null;
@@ -22,12 +21,11 @@ public class MemberDAO {
 			pstmt = con.prepareStatement(SqlLang.SELECT_ALL_MEMBER);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Member mem = new Member(rs.getString("name"),
+				Member mem = new Member(rs.getString("id"),
 						rs.getString("pw"),
-						rs.getString("tel"),
-						rs.getString("addr"),
-						rs.getString("brith"),
-						rs.getString("id"));
+						rs.getString("name"),
+						rs.getString("email"),
+						rs.getString("tel"));
 				memList.add(mem);
 			}
 		} catch(Exception e){
@@ -50,9 +48,8 @@ public class MemberDAO {
 				mem.setId(rs.getString("id"));
 				mem.setPw(rs.getString("pw"));
 				mem.setName(rs.getString("name"));
-				mem.setAddr(rs.getString("addr"));
+				mem.setEmail(rs.getString("email"));
 				mem.setTel(rs.getString("tel"));
-				mem.setBrith(rs.getString("brith"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -68,12 +65,11 @@ public class MemberDAO {
 		try {
 			con = oracle.connect();
 			pstmt = con.prepareStatement(SqlLang.INS_MEMBER);
-			pstmt.setString(1, mem.getName());
+			pstmt.setString(1, mem.getId());
 			pstmt.setString(2, mem.getPw());
-			pstmt.setString(3, mem.getTel());
-			pstmt.setString(4, mem.getAddr());
-			pstmt.setString(5, mem.getBrith());
-			pstmt.setString(6, mem.getId());
+			pstmt.setString(3, mem.getName());
+			pstmt.setString(4, mem.getEmail());
+			pstmt.setString(5, mem.getTel());
 			cnt = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -89,12 +85,11 @@ public class MemberDAO {
 		try {
 			con = oracle.connect();
 			pstmt = con.prepareStatement(SqlLang.UPD_MEMBER);
-			pstmt.setString(1, mem.getName());
-			pstmt.setString(2, mem.getPw());
-			pstmt.setString(3, mem.getTel());
-			pstmt.setString(4, mem.getAddr());
-			pstmt.setString(5, mem.getBrith());
-			pstmt.setString(6, mem.getId());
+			pstmt.setString(1, mem.getPw());
+			pstmt.setString(2, mem.getName());
+			pstmt.setString(3, mem.getEmail());
+			pstmt.setString(4, mem.getTel());
+			pstmt.setString(5, mem.getId());
 			cnt = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -119,24 +114,25 @@ public class MemberDAO {
 		}
 		return cnt;
 	}
-		public boolean idCheck(String id) {
-			boolean ck = false;
-			OracleDB oracle = new OracleDB();
-			try {
-				con = oracle.connect();
-				pstmt = con.prepareStatement(SqlLang.SELECT_ONE_MEMBER);
-				pstmt.setString(1, id);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					ck = true;
-				} else {
-					ck = false;
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			} finally {
-				oracle.close(con, pstmt, rs);
+
+	public boolean idCheck(String id) {
+		boolean ck = false;
+		OracleDB oracle = new OracleDB();
+		try {
+			con = oracle.connect();
+			pstmt = con.prepareStatement(SqlLang.SELECT_ONE_MEMBER);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				ck = true;
+			} else {
+				ck = false;
 			}
-			return ck;
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			oracle.close(con, pstmt, rs);
+		}
+		return ck;
 	}
 }
